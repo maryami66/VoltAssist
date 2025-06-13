@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "category": "Onboarding",
+    "question": "How do I create a new account on the platform?",
+    "answer": "Go to the “Sign Up” page, enter your name, email, and a secure password, then click “Create Account.” You’ll receive a verification email—just click its link to activate your account."
+  },
+  {
+    "id": 2,
+    "category": "Onboarding",
+    "question": "What information is required to sign up?",
+    "answer": "We require your full name, a valid email address, and a password. You can also provide your company name and role, but these are optional."
+  },
+  {
+    "id": 3,
+    "category": "Onboarding",
+    "question": "How can I verify my email address?",
+    "answer": "After signing up, check your inbox for our verification email and click the link inside. If you don’t see it, check your spam folder or resend from your profile settings."
+  }
+]

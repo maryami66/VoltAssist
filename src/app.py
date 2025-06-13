@@ -1,93 +1,28 @@
 import os
+import json
+from dotenv import load_dotenv
+import time
 import streamlit as st
-from azure.search.documents import SearchClient
-from azure.core.credentials import AzureKeyCredential
-import openai
+from rag import retriever
+from openai import OpenAI
 
-# ─────────────────────────────────────────────────────────────────────────────
-# CONFIGURATION: replace the placeholders (or set these as environment vars)
-# ─────────────────────────────────────────────────────────────────────────────
+openai_api_key = os.getenv("OPENAI_API_KEY")
+openai_client = OpenAI(api_key=openai_api_key)
 
-# Azure Cognitive Search settings
-AZ_SEARCH_ENDPOINT = os.getenv("AZ_SEARCH_ENDPOINT", "<YOUR_SEARCH_ENDPOINT>")  # e.g., "https://<your-search-service>.search.windows.net"
-AZ_SEARCH_KEY      = os.getenv("AZ_SEARCH_KEY", "<YOUR_SEARCH_ADMIN_KEY>")
-AZ_SEARCH_INDEX    = os.getenv("AZ_SEARCH_INDEX", "<YOUR_INDEX_NAME>")         # e.g., "electronics-manuals"
 
-# Azure OpenAI settings
-AZ_OPENAI_API_BASE    = os.getenv("AZ_OPENAI_API_BASE", "<YOUR_AZURE_OPENAI_ENDPOINT>")  # e.g., "https://<your-openai-resource>.openai.azure.com/"
-AZ_OPENAI_API_KEY     = os.getenv("AZ_OPENAI_API_KEY", "<YOUR_OPENAI_KEY>")
-AZ_OPENAI_DEPLOYMENT  = os.getenv("AZ_OPENAI_DEPLOYMENT", "<YOUR_DEPLOYMENT_NAME>")      # e.g., "gpt-4o-deployment"
-AZ_OPENAI_API_VERSION = "2023-05-15"  # or whatever version your resource uses
-
-# ─────────────────────────────────────────────────────────────────────────────
-# Initialize clients
-# ─────────────────────────────────────────────────────────────────────────────
-
-# Cognitive Search client
-search_client = SearchClient(
-    endpoint=AZ_SEARCH_ENDPOINT,
-    index_name=AZ_SEARCH_INDEX,
-    credential=AzureKeyCredential(AZ_SEARCH_KEY)
-)
-
-# OpenAI (Azure) configuration
-openai.api_type        = "azure"
-openai.api_key         = AZ_OPENAI_API_KEY
-openai.api_base        = AZ_OPENAI_API_BASE
-openai.api_version     = AZ_OPENAI_API_VERSION
-
-# ─────────────────────────────────────────────────────────────────────────────
-# Streamlit page setup
-# ─────────────────────────────────────────────────────────────────────────────
-
-st.set_page_config(page_title="GadgetGuru Customer Support", layout="wide")
-st.title("🤖 GadgetGuru · AI Customer Support")
-
-if "history" not in st.session_state:
-    # Each message is a dict: {"role": "user" or "assistant", "content": str}
-    st.session_state.history = []
-
-# ─────────────────────────────────────────────────────────────────────────────
-# Helper: Retrieve top‐k relevant docs from Azure Cognitive Search
-# ─────────────────────────────────────────────────────────────────────────────
-
-def retrieve_docs(query: str, top_k: int = 3):
-    """
-    Perform a semantic (or simple) search on Azure Cognitive Search.
-    Returns a list of the top_k document contents (strings).
-    """
-    # You can adjust 'search_mode' and 'query_type' if using Semantic Search.
-    results = search_client.search(
-        search_text=query,
-        top=top_k,
-        include_total_count=False
-    )
-    snippets = []
-    for doc in results:
-        # Assume your index has a field called 'content' or 'text' containing the manual/faq text.
-        # Adjust field name if needed.
-        content = doc.get("content") or doc.get("text") or ""
-        if content:
-            snippets.append(content)
-    return snippets
-
-# ─────────────────────────────────────────────────────────────────────────────
-# Helper: Build a single prompt including retrieved contexts + user query
-# ─────────────────────────────────────────────────────────────────────────────
-
-def build_prompt(user_query: str, retrieved_texts: list[str]) -> str:
+def build_prompt(user_query):
     """
     Combine a system instruction, the retrieved document snippets, and the user query
     into a single prompt for the ChatCompletion API.
     """
     system_instructions = (
-        "You are GadgetGuru, a helpful AI assistant for an online electronics store. "
+        "You are VoltAssist, a helpful AI assistant for an online electronics store. "
         "Use the product manuals and FAQ snippets below to answer customer questions accurately. "
         "If the answer is not in the documents, answer truthfully that you don't have enough information."
     )
 
     # Prefix each snippet with a separator
-    context = "\n\n".join(f"Excerpt {i+1}:\n{txt}" for i, txt in enumerate(retrieved_texts))
+    context = retriever(user_query)
 
     prompt = (
         f"{system_instructions}\n\n"
@@ -99,62 +34,91 @@ def build_prompt(user_query: str, retrieved_texts: list[str]) -> str:
     )
     return prompt
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Helper: Invoke Azure OpenAI with a single‐turn prompt
-# ─────────────────────────────────────────────────────────────────────────────
 
 def generate_response(prompt: str) -> str:
     """
     Calls Azure OpenAI's ChatCompletion endpoint via the chat‐style API,
     but passing our entire prompt as a single user message to a conversation.
     """
-    completion = openai.ChatCompletion.create(
-        engine=AZ_OPENAI_DEPLOYMENT,            # your deployment name
+    completion = openai_client.chat.completions.create(
         messages=[
             {"role": "system", "content": prompt}
         ],
+        model="gpt-4o-mini",
         max_tokens=512,
-        temperature=0.2,                       # lower temp for factual answers
+        temperature=0.2,
         n=1,
         stop=None
     )
     return completion.choices[0].message.content.strip()
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Main chat loop: display history & accept new user input
-# ─────────────────────────────────────────────────────────────────────────────
 
-# Display conversation so far
-for msg in st.session_state.history:
-    if msg["role"] == "user":
-        st.chat_message("User").markdown(msg["content"])
-    else:
-        st.chat_message("GadgetGuru").markdown(msg["content"])
+st.set_page_config(
+    page_title="Volt Assist",
+    page_icon="🤖",
+    layout="centered"
+)
 
-# Accept new user input
-user_input = st.chat_input("Type your question here…")
 
-if user_input:
-    # Add user message to history
-    st.session_state.history.append({"role": "user", "content": user_input})
-    st.chat_message("User").markdown(user_input)
+with st.sidebar:
+    st.title("Settings")
+    available_languages = [
+        "English", "Spanish", "French", "German", "Chinese", "Japanese", "Arabic"
+    ]
+    selected_languages = st.multiselect(
+        "Select languages:", available_languages,
+        default=["English"]
+    )
+    st.markdown(
+        "**Selected:** " + ", ".join(selected_languages)
+        if selected_languages else "None"
+    )
 
-    # Step 1: Retrieve top‐k docs from Azure Cognitive Search
-    retrieved = retrieve_docs(user_input, top_k=3)
 
-    # Step 2: Build a prompt that combines retrieved docs + user question
-    prompt = build_prompt(user_input, retrieved)
+def handle_popup_delay():
+    if 'show_ai' not in st.session_state:
+        st.session_state.show_ai = False
+    if not st.session_state.show_ai:
+        # Keep page blank for a short time before showing chat
+        time.sleep(3)
+        st.session_state.show_ai = True
 
-    # Step 3: Call Azure OpenAI to generate a response
-    try:
-        ai_reply = generate_response(prompt)
-    except Exception as e:
-        ai_reply = (
-            "⚠️ Error generating response. "
-            "Please check your Azure OpenAI configuration.\n\n"
-            f"Details: {e}"
-        )
 
-    # Add AI reply to history & display
-    st.session_state.history.append({"role": "assistant", "content": ai_reply})
-    st.chat_message("GadgetGuru").markdown(ai_reply)
+handle_popup_delay()
+
+
+def init_chat():
+    if 'messages' not in st.session_state:
+        st.session_state.messages = [
+            {"role": "assistant", "content": "How can I help you?"}
+        ]
+
+
+init_chat()
+
+
+def display_chat():
+    for msg in st.session_state.messages:
+        if msg['role'] == 'assistant':
+            st.chat_message("assistant").markdown(msg['content'])
+        else:
+            st.chat_message("user").markdown(msg['content'])
+
+
+display_chat()
+
+# user_input = "I want to sign up, what info do I need?"
+if user_input := st.chat_input("Type your message..."):
+    prompt = build_prompt(user_input)
+    print(prompt)
+    response = generate_response(prompt)
+    # Call OpenAI ChatCompletion
+    with st.chat_message("user"):
+        st.markdown(user_input)
+    with st.chat_message("assistant"):
+        st.write(response)
+
+
+# Footer
+st.markdown("---")
+st.markdown("Powered by OpenAI GPT API")
