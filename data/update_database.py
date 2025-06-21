@@ -12,7 +12,7 @@ qdrant_api_key = os.getenv("QDRANT_API_KEY")
 qdrant_url = os.getenv("QDRANT_URL")
 openai_api_key = os.getenv("OPENAI_API_KEY")
 embedding_model = "text-embedding-3-small"
-collection_name="faq_collection"
+collection_name = "faq_collection"
 
 qdrant_client = QdrantClient(
     url=qdrant_url,

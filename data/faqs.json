@@ -1,20 +1,602 @@
 [
   {
     "id": 1,
-    "category": "Onboarding",
-    "question": "How do I create a new account on the platform?",
-    "answer": "Go to the “Sign Up” page, enter your name, email, and a secure password, then click “Create Account.” You’ll receive a verification email—just click its link to activate your account."
+    "category": "Ordering & Payment",
+    "question": "How do I place an order on your website?",
+    "answer": "To place an order, simply browse our products, add your desired items to the cart, and proceed to checkout by providing your shipping and payment information."
   },
   {
     "id": 2,
-    "category": "Onboarding",
-    "question": "What information is required to sign up?",
-    "answer": "We require your full name, a valid email address, and a password. You can also provide your company name and role, but these are optional."
+    "category": "Ordering & Payment",
+    "question": "What payment methods do you accept?",
+    "answer": "We accept Visa, MasterCard, American Express, PayPal, Klarna, and Apple Pay."
   },
   {
     "id": 3,
-    "category": "Onboarding",
-    "question": "How can I verify my email address?",
-    "answer": "After signing up, check your inbox for our verification email and click the link inside. If you don’t see it, check your spam folder or resend from your profile settings."
+    "category": "Ordering & Payment",
+    "question": "Can I pay using PayPal or cryptocurrency?",
+    "answer": "Yes, we accept PayPal. At this time, we do not accept cryptocurrency."
+  },
+  {
+    "id": 4,
+    "category": "Ordering & Payment",
+    "question": "Is my payment information secure?",
+    "answer": "Absolutely. Your payment information is protected using secure SSL encryption and trusted payment gateways."
+  },
+  {
+    "id": 5,
+    "category": "Ordering & Payment",
+    "question": "Can I modify my order after placing it?",
+    "answer": "Orders can only be modified before they are shipped. Contact us as soon as possible for assistance."
+  },
+  {
+    "id": 6,
+    "category": "Ordering & Payment",
+    "question": "How can I cancel my order?",
+    "answer": "You can cancel your order by contacting our support team before the order is dispatched."
+  },
+  {
+    "id": 7,
+    "category": "Ordering & Payment",
+    "question": "Can I place an order over the phone?",
+    "answer": "No, all orders must be placed through our website for secure processing."
+  },
+  {
+    "id": 8,
+    "category": "Ordering & Payment",
+    "question": "What happens if the item goes out of stock after I order it?",
+    "answer": "If an item goes out of stock after ordering, we will notify you and offer an alternative, refund, or notify you when it's available again."
+  },
+  {
+    "id": 9,
+    "category": "Ordering & Payment",
+    "question": "Will I receive an invoice for my purchase?",
+    "answer": "Yes, an invoice is automatically emailed after your purchase is completed."
+  },
+  {
+    "id": 10,
+    "category": "Ordering & Payment",
+    "question": "Can I get a copy of my past orders?",
+    "answer": "You can view and download past orders by logging into your account and navigating to \"Order History\"."
+  },
+  {
+    "id": 11,
+    "category": "Shipping & Delivery",
+    "question": "Do you offer international shipping?",
+    "answer": "Yes, we offer international shipping to select countries. Check our shipping page for details."
+  },
+  {
+    "id": 12,
+    "category": "Shipping & Delivery",
+    "question": "How much does shipping cost?",
+    "answer": "Shipping costs are calculated at checkout based on your location and the size/weight of your order."
+  },
+  {
+    "id": 13,
+    "category": "Shipping & Delivery",
+    "question": "How long will delivery take?",
+    "answer": "Standard delivery usually takes 2-5 business days. Expedited options are available."
+  },
+  {
+    "id": 14,
+    "category": "Shipping & Delivery",
+    "question": "How can I track my order?",
+    "answer": "You can track your order through the tracking link sent via email once your order is shipped."
+  },
+  {
+    "id": 15,
+    "category": "Shipping & Delivery",
+    "question": "What courier services do you use?",
+    "answer": "We use DHL, UPS, and local courier services depending on your location."
+  },
+  {
+    "id": 16,
+    "category": "Shipping & Delivery",
+    "question": "Can I choose the delivery date?",
+    "answer": "Currently, we do not offer scheduled delivery. You can track and prepare for your delivery via the tracking number."
+  },
+  {
+    "id": 17,
+    "category": "Shipping & Delivery",
+    "question": "Do you offer same-day or next-day delivery?",
+    "answer": "Same-day or next-day delivery is available in select locations-check availability during checkout."
+  },
+  {
+    "id": 18,
+    "category": "Shipping & Delivery",
+    "question": "Can I pick up my order in-store?",
+    "answer": "No, we currently do not offer local pick-up."
+  },
+  {
+    "id": 19,
+    "category": "Shipping & Delivery",
+    "question": "What if I am not home during delivery?",
+    "answer": "If you're not home, the courier will attempt a re-delivery or leave instructions for pickup."
+  },
+  {
+    "id": 20,
+    "category": "Shipping & Delivery",
+    "question": "What should I do if my package is delayed?",
+    "answer": "If your package is delayed, please contact us and we'll investigate the status with the courier."
+  },
+  {
+    "id": 21,
+    "category": "Returns & Exchanges",
+    "question": "What is your return policy?",
+    "answer": "We accept returns within 14 days of delivery for unused and unopened items."
+  },
+  {
+    "id": 22,
+    "category": "Returns & Exchanges",
+    "question": "How do I return an item?",
+    "answer": "To return an item, go to your account, find your order, and request a return. We will email you further instructions."
+  },
+  {
+    "id": 23,
+    "category": "Returns & Exchanges",
+    "question": "Do I have to pay for return shipping?",
+    "answer": "Return shipping is covered only for defective or incorrect items. Otherwise, customers are responsible."
+  },
+  {
+    "id": 24,
+    "category": "Returns & Exchanges",
+    "question": "Can I exchange a product for a different one?",
+    "answer": "Yes, items can be exchanged for a different model or color, subject to availability."
+  },
+  {
+    "id": 25,
+    "category": "Returns & Exchanges",
+    "question": "How long does it take to process a return?",
+    "answer": "Once we receive the item, processing your return/refund may take 3-7 business days."
+  },
+  {
+    "id": 26,
+    "category": "Returns & Exchanges",
+    "question": "Can I return an opened item?",
+    "answer": "Opened items can be returned if they are defective. Non-defective opened items may not be eligible."
+  },
+  {
+    "id": 27,
+    "category": "Returns & Exchanges",
+    "question": "What if the item is damaged or defective?",
+    "answer": "Contact us immediately with pictures and details if your product arrives damaged or not working."
+  },
+  {
+    "id": 28,
+    "category": "Returns & Exchanges",
+    "question": "Can I return a gift I received?",
+    "answer": "Yes, you can return a gifted item with the order number or purchaser's email."
+  },
+  {
+    "id": 29,
+    "category": "Returns & Exchanges",
+    "question": "Will I get a full refund?",
+    "answer": "Refunds are processed back to the original payment method once the return is approved."
+  },
+  {
+    "id": 30,
+    "category": "Returns & Exchanges",
+    "question": "How do I know if my return has been approved?",
+    "answer": "We'll notify you via email once your return is received and inspected."
+  },
+  {
+    "id": 31,
+    "category": "Product Information & Support",
+    "question": "How do I know if a laptop is compatible with my needs?",
+    "answer": "Check the product description and compare specifications, or contact our support for guidance."
+  },
+  {
+    "id": 32,
+    "category": "Product Information & Support",
+    "question": "Do you provide product comparisons?",
+    "answer": "Yes, we offer product comparisons on select pages and via customer support."
+  },
+  {
+    "id": 33,
+    "category": "Product Information & Support",
+    "question": "Can I get help choosing a device?",
+    "answer": "Absolutely, our team is happy to help you choose the right device for your needs."
+  },
+  {
+    "id": 34,
+    "category": "Product Information & Support",
+    "question": "Are all your products brand new?",
+    "answer": "Yes, all products are 100% brand new unless clearly labeled as refurbished."
+  },
+  {
+    "id": 35,
+    "category": "Product Information & Support",
+    "question": "Do your products come with warranties?",
+    "answer": "Most products come with a 1-year manufacturer's warranty. Details are in the product description."
+  },
+  {
+    "id": 36,
+    "category": "Product Information & Support",
+    "question": "Where can I find product manuals?",
+    "answer": "Product manuals are usually available in the product listing or on the manufacturer's website."
+  },
+  {
+    "id": 37,
+    "category": "Product Information & Support",
+    "question": "What if a product has missing parts?",
+    "answer": "Please report missing parts within 48 hours and we'll arrange a replacement."
+  },
+  {
+    "id": 38,
+    "category": "Product Information & Support",
+    "question": "Can I get support after purchase?",
+    "answer": "Yes, our support team is available after purchase to help with setup or troubleshooting."
+  },
+  {
+    "id": 39,
+    "category": "Product Information & Support",
+    "question": "Do you sell refurbished or used devices?",
+    "answer": "We do not sell used devices. Refurbished items are listed clearly as such with warranty details."
+  },
+  {
+    "id": 40,
+    "category": "Product Information & Support",
+    "question": "How can I ask questions about a specific product?",
+    "answer": "Click the \"Ask a Question\" button on the product page or contact us directly."
+  },
+  {
+    "id": 41,
+    "category": " Account & Profile",
+    "question": "How do I create an account?",
+    "answer": "Click \"Sign Up\" at the top of the page, enter your details, and confirm your email."
+  },
+  {
+    "id": 42,
+    "category": " Account & Profile",
+    "question": "What are the benefits of having an account?",
+    "answer": "Account holders can track orders, save addresses, and get faster checkout."
+  },
+  {
+    "id": 43,
+    "category": " Account & Profile",
+    "question": "I forgot my password—how can I reset it?",
+    "answer": "Click \"Forgot Password?\" on the login page and follow the reset instructions."
+  },
+  {
+    "id": 44,
+    "category": " Account & Profile",
+    "question": "How can I update my personal information?",
+    "answer": "Log into your account and go to \"Profile\" to update your personal information."
+  },
+  {
+    "id": 45,
+    "category": " Account & Profile",
+    "question": "How do I delete my account?",
+    "answer": "Contact our support to request account deletion."
+  },
+  {
+    "id": 46,
+    "category": " Account & Profile",
+    "question": "Can I shop without creating an account?",
+    "answer": "Yes, guest checkout is available, but you won't be able to track orders or save your info."
+  },
+  {
+    "id": 47,
+    "category": " Account & Profile",
+    "question": "Is my personal data secure?",
+    "answer": "Your data is protected and handled according to GDPR and privacy standards."
+  },
+  {
+    "id": 48,
+    "category": " Account & Profile",
+    "question": "Can I save my favorite products?",
+    "answer": "Yes, click the heart icon next to any product to save it to your wishlist."
+  },
+  {
+    "id": 49,
+    "category": " Account & Profile",
+    "question": "How do I view my past orders?",
+    "answer": "Go to \"My Orders\" under your account dashboard to view past purchases."
+  },
+  {
+    "id": 50,
+    "category": " Account & Profile",
+    "question": "Can I subscribe to your newsletter?",
+    "answer": "Subscribe during checkout or via the newsletter form at the bottom of our homepage."
+  },
+  {
+    "id": 51,
+    "category": "Promotions & Gift Cards",
+    "question": "Do you offer discount codes?",
+    "answer": "Yes, we regularly offer discounts-check our homepage or subscribe to our newsletter."
+  },
+  {
+    "id": 52,
+    "category": "Promotions & Gift Cards",
+    "question": "Where can I enter a promo code?",
+    "answer": "You can enter a promo code during checkout on the payment page."
+  },
+  {
+    "id": 53,
+    "category": "Promotions & Gift Cards",
+    "question": "How do I know when there’s a sale?",
+    "answer": "Subscribe to our newsletter or follow us on social media to stay updated on sales."
+  },
+  {
+    "id": 54,
+    "category": "Promotions & Gift Cards",
+    "question": "Can I use multiple promo codes?",
+    "answer": "Only one promo code can be used per order unless stated otherwise."
+  },
+  {
+    "id": 55,
+    "category": "Promotions & Gift Cards",
+    "question": "Do you sell gift cards?",
+    "answer": "Yes, we sell digital gift cards in various amounts."
+  },
+  {
+    "id": 56,
+    "category": "Promotions & Gift Cards",
+    "question": "How do I redeem a gift card?",
+    "answer": "Enter your gift card code at checkout in the \"Gift Card\" field."
+  },
+  {
+    "id": 57,
+    "category": "Promotions & Gift Cards",
+    "question": "Can I check my gift card balance?",
+    "answer": "Check your balance by clicking the \"Gift Card Balance\" link on our site."
+  },
+  {
+    "id": 58,
+    "category": "Promotions & Gift Cards",
+    "question": "Can I use a gift card more than once?",
+    "answer": "Yes, as long as there is remaining balance, it can be used for multiple orders."
+  },
+  {
+    "id": 59,
+    "category": "Promotions & Gift Cards",
+    "question": "Do gift cards expire?",
+    "answer": "Gift cards do not expire, unless otherwise stated on the card."
+  },
+  {
+    "id": 60,
+    "category": "Promotions & Gift Cards",
+    "question": "Can I get a refund for a gift card?",
+    "answer": "No, gift cards are non-refundable and cannot be exchanged for cash."
+  },
+  {
+    "id": 61,
+    "category": "Billing & Tax",
+    "question": "Will I be charged tax on my order?",
+    "answer": "Yes, applicable taxes are calculated based on your shipping address and shown at checkout."
+  },
+  {
+    "id": 62,
+    "category": "Billing & Tax",
+    "question": "Can I get a VAT invoice?",
+    "answer": "Yes, VAT invoices are available-contact support with your order number."
+  },
+  {
+    "id": 63,
+    "category": "Billing & Tax",
+    "question": "Why was I charged twice?",
+    "answer": "Duplicate charges are rare-please contact us immediately if you see one."
+  },
+  {
+    "id": 64,
+    "category": "Billing & Tax",
+    "question": "What should I do if my card is declined?",
+    "answer": "Try using another card or contact your bank if your payment is declined."
+  },
+  {
+    "id": 65,
+    "category": "Billing & Tax",
+    "question": "Can I split payments across two cards?",
+    "answer": "Unfortunately, we cannot split payments across multiple cards."
+  },
+  {
+    "id": 66,
+    "category": "Billing & Tax",
+    "question": "What currencies do you accept?",
+    "answer": "We accept payments in Euro, USD, and other major currencies depending on your location."
+  },
+  {
+    "id": 67,
+    "category": "Billing & Tax",
+    "question": "Can I pay in installments?",
+    "answer": "Installment plans are available via Klarna or PayPal (subject to eligibility)."
+  },
+  {
+    "id": 68,
+    "category": "Billing & Tax",
+    "question": "How do refunds show up on my account?",
+    "answer": "Refunds will appear on your statement within 5-10 business days after processing."
+  },
+  {
+    "id": 69,
+    "category": "Billing & Tax",
+    "question": "Can I change my billing address?",
+    "answer": "To change your billing address, go to your account settings before placing an order."
+  },
+  {
+    "id": 70,
+    "category": "Billing & Tax",
+    "question": "What is your billing cycle?",
+    "answer": "We charge immediately upon successful checkout. There is no recurring billing."
+  },
+  {
+    "id": 71,
+    "category": "Warranty & Repairs",
+    "question": "How long is the warranty on products?",
+    "answer": "Warranties vary, but most devices have a 1-year manufacturer warranty."
+  },
+  {
+    "id": 72,
+    "category": "Warranty & Repairs",
+    "question": "What does the warranty cover?",
+    "answer": "The warranty usually covers hardware defects and manufacturing faults."
+  },
+  {
+    "id": 73,
+    "category": "Warranty & Repairs",
+    "question": "How do I claim warranty service?",
+    "answer": "Contact us with your order number and issue, and we'll help you initiate the claim."
+  },
+  {
+    "id": 74,
+    "category": "Warranty & Repairs",
+    "question": "Can I extend my warranty?",
+    "answer": "Some products offer optional extended warranty-check product details or add at checkout."
+  },
+  {
+    "id": 75,
+    "category": "Warranty & Repairs",
+    "question": "What is not covered under warranty?",
+    "answer": "Accidental damage, misuse, and unauthorized repairs are not covered."
+  },
+  {
+    "id": 76,
+    "category": "Warranty & Repairs",
+    "question": "Who handles the warranty—your shop or the manufacturer?",
+    "answer": "Most warranties are handled by the manufacturer, but we can help guide you through it."
+  },
+  {
+    "id": 77,
+    "category": "Warranty & Repairs",
+    "question": "How long do repairs take?",
+    "answer": "Repair timelines vary, but we aim for 7-14 business days depending on the issue."
+  },
+  {
+    "id": 78,
+    "category": "Warranty & Repairs",
+    "question": "Will I be charged for repairs?",
+    "answer": "If the product is under warranty, repairs are typically free unless the damage is excluded."
+  },
+  {
+    "id": 79,
+    "category": "Warranty & Repairs",
+    "question": "Can I repair a product myself without voiding the warranty?",
+    "answer": "Self-repairing may void the warranty. Always check terms before opening a device."
+  },
+  {
+    "id": 80,
+    "category": "Warranty & Repairs",
+    "question": "How can I check the warranty status?",
+    "answer": "Contact us to check your product's warranty status using the order number."
+  },
+  {
+    "id": 81,
+    "category": "Inventory & Availability",
+    "question": "Is this product in stock?",
+    "answer": "Availability is listed on each product page-\"In Stock\" or \"Out of Stock\"."
+  },
+  {
+    "id": 82,
+    "category": "Inventory & Availability",
+    "question": "When will an out-of-stock item be available again?",
+    "answer": "Click \"Notify Me\" on out-of-stock items to get an email when they return."
+  },
+  {
+    "id": 83,
+    "category": "Inventory & Availability",
+    "question": "Can I pre-order upcoming products?",
+    "answer": "Yes, you can pre-order select upcoming devices. Look for the \"Pre-Order\" badge."
+  },
+  {
+    "id": 84,
+    "category": "Inventory & Availability",
+    "question": "How accurate is the stock information on your site?",
+    "answer": "Stock levels are updated in real-time but may occasionally change during checkout."
+  },
+  {
+    "id": 85,
+    "category": "Inventory & Availability",
+    "question": "Do you restock clearance items?",
+    "answer": "Clearance items are not usually restocked once sold out."
+  },
+  {
+    "id": 86,
+    "category": "Inventory & Availability",
+    "question": "Can I reserve an item before it’s back in stock?",
+    "answer": "We do not accept reservations, but you can sign up for restock alerts."
+  },
+  {
+    "id": 87,
+    "category": "Inventory & Availability",
+    "question": "Are quantities limited per customer?",
+    "answer": "To ensure fairness, we may limit quantities per customer on popular items."
+  },
+  {
+    "id": 88,
+    "category": "Inventory & Availability",
+    "question": "Do you notify customers when an item is available?",
+    "answer": "Yes, enable notifications or subscribe to our back-in-stock alerts."
+  },
+  {
+    "id": 89,
+    "category": "Inventory & Availability",
+    "question": "Are your prices the same in-store and online?",
+    "answer": "Prices may vary between online and in-store (if applicable), based on current promotions."
+  },
+  {
+    "id": 90,
+    "category": "Inventory & Availability",
+    "question": "What if an item I received is different from what I ordered?",
+    "answer": "If you receive the wrong item, contact us immediately for a replacement or refund."
+  },
+  {
+    "id": 91,
+    "category": "Customer Service & Contact",
+    "question": "How can I contact customer support?",
+    "answer": "You can contact us via our support page, email, or live chat during business hours."
+  },
+  {
+    "id": 92,
+    "category": "Customer Service & Contact",
+    "question": "What are your customer service hours?",
+    "answer": "Support is available Monday to Friday, 9:00 AM - 6:00 PM CET."
+  },
+  {
+    "id": 93,
+    "category": "Customer Service & Contact",
+    "question": "Do you offer support in multiple languages?",
+    "answer": "Yes, support is available in English, German, and French."
+  },
+  {
+    "id": 94,
+    "category": "Customer Service & Contact",
+    "question": "Can I live chat with a support agent?",
+    "answer": "Yes, use the live chat widget on the bottom right of the screen."
+  },
+  {
+    "id": 95,
+    "category": "Customer Service & Contact",
+    "question": "How long does it take to get a reply?",
+    "answer": "We typically respond to emails within 24 hours on business days."
+  },
+  {
+    "id": 96,
+    "category": "Customer Service & Contact",
+    "question": "Where can I file a complaint?",
+    "answer": "Submit complaints through our support form or email us directly."
+  },
+  {
+    "id": 97,
+    "category": "Customer Service & Contact",
+    "question": "How do I give feedback about my shopping experience?",
+    "answer": "We welcome feedback! Use the feedback form on the order confirmation page or contact us directly."
+  },
+  {
+    "id": 98,
+    "category": "Customer Service & Contact",
+    "question": "Do you have a loyalty program?",
+    "answer": "Yes, our loyalty program rewards points for every purchase-details on our homepage."
+  },
+  {
+    "id": 99,
+    "category": "Customer Service & Contact",
+    "question": "Can I follow you on social media?",
+    "answer": "Follow us on Instagram, Facebook, and LinkedIn for news, tips, and deals."
+  },
+  {
+    "id": 100,
+    "category": "Customer Service & Contact",
+    "question": "Where are you located?",
+    "answer": "We are located in Munich, Germany. Online-only operations currently."
   }
 ]
