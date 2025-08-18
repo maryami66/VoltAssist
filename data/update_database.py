@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, VectorParams
 from qdrant_client.models import PointStruct
-import tiktoken
 from openai import OpenAI
 
 load_dotenv()
@@ -20,7 +19,7 @@ qdrant_client = QdrantClient(
 )
 
 # to delete if needed
-qdrant_client.delete_collection(collection_name)
+# qdrant_client.delete_collection(collection_name)
 
 openai_client = OpenAI(api_key=openai_api_key)
 
@@ -44,7 +43,6 @@ for q in questions:
     embeddings.append(embedding_response.data[0].embedding)
 
 # Load the appropriate encoder for the embedding model
-# encoding = tiktoken.encoding_for_model()
 print(qdrant_client.get_collections())
 
 points = []
@@ -64,7 +62,6 @@ qdrant_client.upsert(
     collection_name=collection_name,
     points=points
 )
-
 
 # points = qdrant_client.scroll(
 #     collection_name=collection_name,

@@ -1,124 +1,86 @@
+import streamlit as st
 import os
 import json
+from datetime import datetime
+from pathlib import Path
 from dotenv import load_dotenv
-import time
-import streamlit as st
-from rag import retriever
-from openai import OpenAI
+from llm import OpenAIClient
+from streamlit_feedback import streamlit_feedback
 
-openai_api_key = os.getenv("OPENAI_API_KEY")
-openai_client = OpenAI(api_key=openai_api_key)
-
-
-def build_prompt(user_query):
-    """
-    Combine a system instruction, the retrieved document snippets, and the user query
-    into a single prompt for the ChatCompletion API.
-    """
-    system_instructions = (
-        "You are VoltAssist, a helpful AI assistant for an online electronics store. "
-        "Use the product manuals and FAQ snippets below to answer customer questions accurately. "
-        "If the answer is not in the documents, answer truthfully that you don't have enough information."
-    )
-
-    # Prefix each snippet with a separator
-    context = retriever(user_query)
-
-    prompt = (
-        f"{system_instructions}\n\n"
-        f"---\n"
-        f"{context}\n"
-        f"---\n\n"
-        f"Customer asks: \"{user_query}\"\n"
-        f"AI:"
-    )
-    return prompt
-
-
-def generate_response(prompt: str) -> str:
-    """
-    Calls Azure OpenAI's ChatCompletion endpoint via the chat‐style API,
-    but passing our entire prompt as a single user message to a conversation.
-    """
-    completion = openai_client.chat.completions.create(
-        messages=[
-            {"role": "system", "content": prompt}
-        ],
-        model="gpt-4o-mini",
-        max_tokens=512,
-        temperature=0.2,
-        n=1,
-        stop=None
-    )
-    return completion.choices[0].message.content.strip()
-
+parent_dir = Path(__file__).resolve().parent.parent
+# create a .env file in VoltAssist directory
+load_dotenv(parent_dir / ".env")
+with open("data/faqs.json", "r", encoding="utf-8") as f:
+    faqs = json.load(f)
 
 st.set_page_config(
-    page_title="Volt Assist",
+    page_title="Volt Assist - A Q&A Bot",
     page_icon="🤖",
     layout="centered"
 )
+st.title("💬 VoltAssist – Assistant")
+st.markdown("Ask any question about , and more. 🚀")
 
+categories = list(set([f["category"] for f in faqs]))
+category = st.radio("Please select what kind of problem you have", categories, horizontal=True, key="department")
+available_languages = ["English", "Spanish", "French", "German", "Chinese", "Japanese", "Arabic"]
+st.session_state.selected_languages = st.selectbox(
+    "Select languages:", available_languages,
+)
+if st.session_state.selected_languages is None:
+    st.session_state.selected_languages = "English"
+
+openai_api_key = os.getenv("OPENAI_API_KEY")
+openai_client = OpenAIClient(openai_api_key, category, st.session_state.selected_languages)
 
 with st.sidebar:
-    st.title("Settings")
-    available_languages = [
-        "English", "Spanish", "French", "German", "Chinese", "Japanese", "Arabic"
-    ]
-    selected_languages = st.multiselect(
-        "Select languages:", available_languages,
-        default=["English"]
-    )
-    st.markdown(
-        "**Selected:** " + ", ".join(selected_languages)
-        if selected_languages else "None"
-    )
+    now = datetime.now()
+
+    st.header("🗓️ Today")
+    st.write(f"**Date:** {now:%A, %d %B %Y}")
+    st.write(f"**Time:** {now:%H:%M:%S}")
+
+    # support button
+    st.markdown("<hr>", unsafe_allow_html=True)
+    st.markdown("If **VoltAssist** cannot help, we are always here to support you with your question. Please **contact us**:", unsafe_allow_html=True)
+
+    recipient_email = "support@example.com"
+    subject = "Support Request"
+    body = "Please describe the your question:"
+    mailto_link = f"mailto:{recipient_email}?subject={subject}&body={body}"
+    st.link_button(label="✉ Contact Support", url=mailto_link)
+    st.markdown("---")
+    st.caption("Built for customer support demos with with Streamlit · Powered by OpenAI ✨")
 
 
-def handle_popup_delay():
-    if 'show_ai' not in st.session_state:
-        st.session_state.show_ai = False
-    if not st.session_state.show_ai:
-        # Keep page blank for a short time before showing chat
-        time.sleep(3)
-        st.session_state.show_ai = True
+# --- Question Input ---
+quick_examples = [
+    "How many vacation days do I have?",
+    "Can I work from home on Fridays?",
+    "What is the travel reimbursement limit?",
+]
 
+user_question = st.chat_input("e.g: What are the special leave?")
 
-handle_popup_delay()
+with st.container():
+    st.markdown("**Quick questions:**")
+    cols = st.columns(len(quick_examples))
+    for idx, q in enumerate(quick_examples):
+        if cols[idx].button(q, key=f"quick_{idx}"):
+            user_question = q
 
+if user_question:
+    st.chat_message("human").write(user_question)
+    st.session_state.messages = openai_client.build_prompt(user_question)
+    print(st.session_state.messages)
+    with st.spinner("Thinking…"):
+        answer = openai_client.generate_response(st.session_state.messages)
+    st.session_state.messages.append({"role": "Assistant", "content": answer})
+    st.chat_message("ai").write(answer)
 
-def init_chat():
-    if 'messages' not in st.session_state:
-        st.session_state.messages = [
-            {"role": "assistant", "content": "How can I help you?"}
-        ]
-
-
-init_chat()
-
-
-def display_chat():
-    for msg in st.session_state.messages:
-        if msg['role'] == 'assistant':
-            st.chat_message("assistant").markdown(msg['content'])
-        else:
-            st.chat_message("user").markdown(msg['content'])
-
-
-display_chat()
-
-# user_input = "I want to sign up, what info do I need?"
-if user_input := st.chat_input("Type your message..."):
-    prompt = build_prompt(user_input)
-    print(prompt)
-    response = generate_response(prompt)
-    # Call OpenAI ChatCompletion
-    with st.chat_message("user"):
-        st.markdown(user_input)
-    with st.chat_message("assistant"):
-        st.write(response)
-
-
-# Footer
-st.markdown("---")
-st.markdown("Powered by OpenAI GPT API")
+    streamlit_feedback(
+            feedback_type="thumbs",
+            align="flex-end",
+            key="feedback_given",
+            optional_text_label="Please give feedback to the answer",
+        )
