@@ -19,7 +19,7 @@ qdrant_client = QdrantClient(
 )
 
 # to delete if needed
-qdrant_client.delete_collection(collection_name)
+# qdrant_client.delete_collection(collection_name)
 
 openai_client = OpenAI(api_key=openai_api_key)
 
