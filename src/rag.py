@@ -3,6 +3,7 @@ import json
 from dotenv import load_dotenv
 from openai import OpenAI
 from qdrant_client import QdrantClient
+from qdrant_client.models import Filter, FieldCondition, MatchValue
 
 load_dotenv()
 qdrant_api_key = os.getenv("QDRANT_API_KEY")
@@ -18,19 +19,28 @@ qdrant_client = QdrantClient(
 )
 
 
-def retriever(user_input):
+def retriever(user_input, category, top_k=3):
     embedding_user_input = openai_client.embeddings.create(
         model="text-embedding-3-small",
         input=user_input
     ).data[0].embedding
+    query_filter = Filter(
+             must=[
+                 FieldCondition(
+                     key='category',
+                     match=MatchValue(value=category),
+                     )
+                ]
+        )
     search_result = qdrant_client.query_points(
         collection_name=collection_name,
         query=embedding_user_input,
+        query_filter=query_filter,
         with_payload=True,
-        limit=2
+        limit=top_k
     ).points
     search_result_sorted = sorted(search_result, key=lambda x: x.score, reverse=True)
-    points = [{'Question': p.payload['question'], "Answer": p.payload['answer']} for p in search_result_sorted]
+    points = [{"Question": p.payload["question"], "Answer": p.payload["answer"], "score": p.score} for p in search_result_sorted]
 
     return json.dumps(points)
 

@@ -18,11 +18,11 @@ st.set_page_config(
     page_icon="🤖",
     layout="centered"
 )
-st.title("💬 VoltAssist – Assistant")
-st.markdown("Ask any question about , and more. 🚀")
+st.title("💬 VoltAssist – A Q&A Bot")
+st.markdown("Ask any question about Shipping & Delivery, Warranty & Repairs, Customer Service & Contact, Product Information & Support, Ordering & Payment, Billing & Tax, Promotions & Gift Cards, Inventory & Availability, Account & Profile, Returns & Exchanges, and more. 🚀")
 
 categories = list(set([f["category"] for f in faqs]))
-category = st.radio("Please select what kind of problem you have", categories, horizontal=True, key="department")
+category = st.radio("Please select the category for your question:", categories, horizontal=True, key="department")
 available_languages = ["English", "Spanish", "French", "German", "Chinese", "Japanese", "Arabic"]
 st.session_state.selected_languages = st.selectbox(
     "Select languages:", available_languages,
@@ -50,17 +50,17 @@ with st.sidebar:
     mailto_link = f"mailto:{recipient_email}?subject={subject}&body={body}"
     st.link_button(label="✉ Contact Support", url=mailto_link)
     st.markdown("---")
-    st.caption("Built for customer support demos with with Streamlit · Powered by OpenAI ✨")
+    st.caption("Built for customer support demos with Streamlit · Powered by OpenAI ✨")
 
 
 # --- Question Input ---
 quick_examples = [
-    "How many vacation days do I have?",
-    "Can I work from home on Fridays?",
-    "What is the travel reimbursement limit?",
+    "How can I reset my password?",
+    "What’s your refund policy?",
+    "How can I place an order?",
 ]
 
-user_question = st.chat_input("e.g: What are the special leave?")
+user_question = st.chat_input("Write your question here!")
 
 with st.container():
     st.markdown("**Quick questions:**")

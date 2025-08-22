@@ -3,7 +3,7 @@ import json
 from dotenv import load_dotenv
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, VectorParams
-from qdrant_client.models import PointStruct
+from qdrant_client.models import PointStruct, PayloadSchemaType
 from openai import OpenAI
 
 load_dotenv()
@@ -19,7 +19,7 @@ qdrant_client = QdrantClient(
 )
 
 # to delete if needed
-# qdrant_client.delete_collection(collection_name)
+qdrant_client.delete_collection(collection_name)
 
 openai_client = OpenAI(api_key=openai_api_key)
 
@@ -52,6 +52,7 @@ for item, vector in zip(faqs, embeddings):
         id=item["id"],
         vector=vector,
         payload={
+            "category": item["category"],
             "question": item["question"],
             "answer": item["answer"],
         }
@@ -62,6 +63,11 @@ qdrant_client.upsert(
     collection_name=collection_name,
     points=points
 )
+
+qdrant_client.create_payload_index(
+    collection_name=collection_name,
+    field_name="category",
+    field_schema=PayloadSchemaType.KEYWORD)
 
 # points = qdrant_client.scroll(
 #     collection_name=collection_name,
